@@ -9,8 +9,10 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
-        "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/sanctum": "^2.12",
+        "laravel/telescope": "^4.6",
+        "laravel/tinker": "^2.5",
+        "phpoffice/phpspreadsheet": "^1.20"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

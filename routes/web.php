@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\PlatformsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/platforms', [PlatformsController::class, 'getPlatforms'])->name('platforms');
+
+Route::get('/courses', [CoursesController::class, 'getCourses'])->name('courses');

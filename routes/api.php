@@ -14,6 +14,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//API route for login user
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+
+//API routes for platforms, courses, blocks, tasks, marks and students
+Route::resource('platforms', App\Http\Controllers\API\PlatformController::class);
+Route::resource('courses', App\Http\Controllers\API\CourseController::class);
+Route::resource('blocks', App\Http\Controllers\API\BlockController::class);
+Route::resource('tasks', App\Http\Controllers\API\TaskController::class);
+Route::resource('marks', App\Http\Controllers\API\MarkController::class);
+Route::resource('students', App\Http\Controllers\API\StudentController::class);
+
+//Protecting routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    //API route to get current user info
+    Route::get('/profile', function(Request $request) {
+        return auth()->user();
+    });
+
+    //API route for register new user
+    Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+
+    // API route for logout user
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
