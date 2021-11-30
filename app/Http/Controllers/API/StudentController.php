@@ -27,7 +27,7 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
@@ -49,7 +49,7 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
@@ -70,7 +70,7 @@ class StudentController extends Controller
 
     public function destroy(Student $student)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $student->delete();

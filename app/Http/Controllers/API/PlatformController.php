@@ -36,11 +36,11 @@ class PlatformController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100|unique:platforms,name',
         ]);
 
         if($validator->fails()){
@@ -56,11 +56,11 @@ class PlatformController extends Controller
 
     public function update(Request $request, Platform $platform)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
         
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100|unique:platforms,name',
         ]);
 
         if($validator->fails()){
@@ -75,7 +75,7 @@ class PlatformController extends Controller
 
     public function destroy(Platform $platform)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
         
         $platform->delete();

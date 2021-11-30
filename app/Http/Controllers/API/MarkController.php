@@ -27,11 +27,11 @@ class MarkController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
-            'student_id' => 'required|exists:students.id',
+            'student_id' => 'required|exists:students,id',
             'task_id' => 'required|exists:tasks.id',
             'mark' => 'required|numeric|min:0',
         ]);
@@ -51,11 +51,11 @@ class MarkController extends Controller
 
     public function update(Request $request, Mark $mark)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
-            'student_id' => 'required|exists:students.id',
+            'student_id' => 'required|exists:students,id',
             'task_id' => 'required|exists:tasks.id',
             'mark' => 'required|numeric|min:0',
         ]);
@@ -74,7 +74,7 @@ class MarkController extends Controller
 
     public function destroy(Mark $mark)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $mark->delete();

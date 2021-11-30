@@ -27,12 +27,12 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:100',
-            'block_id' => 'required|exists:courses.id',
+            'block_id' => 'required|exists:courses,id',
             'points_max' => 'nullable|numeric|min:0',
             'points_pass' => 'nullable|numeric|min:0|less_than_field:points_max',
         ]);
@@ -53,12 +53,12 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
-            'block_id' => 'required|exists:courses.id',
+            'block_id' => 'required|exists:courses,id',
             'points_max' => 'nullable|numeric|min:0',
             'points_pass' => 'nullable|numeric|min:0|less_than_field:points_max',
         ]);
@@ -78,7 +78,7 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $task->delete();

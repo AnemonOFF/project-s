@@ -27,12 +27,12 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:100',
-            'platform_id' => 'required|exists:platforms.id',
+            'name' => 'required|string|max:100|unique:courses,name',
+            'platform_id' => 'required|exists:platforms,id',
         ]);
 
         if($validator->fails()){
@@ -49,12 +49,12 @@ class CourseController extends Controller
 
     public function update(Request $request, Course $course)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:100',
-            'platform_id' => 'required|exists:platforms.id',
+            'name' => 'required|string|max:100|unique:courses,name',
+            'platform_id' => 'required|exists:platforms,id',
         ]);
 
         if($validator->fails()){
@@ -70,7 +70,7 @@ class CourseController extends Controller
 
     public function destroy(Course $course)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $course->delete();

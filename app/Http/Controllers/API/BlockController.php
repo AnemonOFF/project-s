@@ -27,17 +27,17 @@ class BlockController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:100',
-            'course_id' => 'required|exists:courses.id',
-            'parent_id' => 'nullable|exists:blocks.id',
+            'course_id' => 'required|exists:courses,id',
+            'parent_id' => 'nullable|exists:blocks,id',
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors());       
+            return response()->json($validator->errors());
         }
 
         $block = Block::create([
@@ -51,13 +51,13 @@ class BlockController extends Controller
 
     public function update(Request $request, Block $block)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:100',
-            'course_id' => 'required|exists:courses.id',
-            'parent_id' => 'nullable|exists:blocks.id',
+            'course_id' => 'required|exists:courses,id',
+            'parent_id' => 'nullable|exists:blocks,id',
         ]);
 
         if($validator->fails()){
@@ -74,7 +74,7 @@ class BlockController extends Controller
 
     public function destroy(Block $block)
     {
-        if (!Auth::check())
+        if (!auth('sanctum')->check())
             return response()->json("Authentification required", 403);
 
         $block->delete();
