@@ -1,0 +1,66 @@
+.mainbutton {
+    background-color: black;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+.modalewin {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 50px;
+    z-index: 100;
+}
+.modal__title {
+    margin-top: 20px;
+    color: #000;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+.modal__submit {
+    position: absolute;
+    right: 50px;
+    font-size: 30px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.inmodale {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    box-shadow: 10px 10px 10px 2px rgba(0, 0, 0, 0.3);
+}
+.inmodale label {
+    color: black;
+    border: 1px solid transparent;
+    padding: 10px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+.platforms {
+    width: 33.3%;
+    min-width: 200px;
+    font-size: 30px;
+    margin-top: 30px;
+    font-style: oblique 0.2deg;
+    font-weight: default;
+}
+.platforms input {
+    display: none;
+}
+.platforms input:checked ~ label {
+    color: #08ffc5;
+}
+.flexer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    text-align: center;
+}
+

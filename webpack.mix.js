@@ -11,4 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/*', 'public/js');
+mix.js('resources/js/slept.js', 'public/js/slept.js')
+    .css('resources/css/style.css', 'public/css/style.css');
