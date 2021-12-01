@@ -7,12 +7,24 @@
   \*******************************/
 /***/ (() => {
 
-$(".modalewin").hide();
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 var platforms = [],
     courses = [],
     blocks = [],
     tasks = [],
-    marks = [];
+    marks = [],
+    stage = "platforms";
 $(function () {
   $(".modalewin").click(function () {
     $(".modalewin").fadeOut();
@@ -25,49 +37,75 @@ $(function () {
       url: "/api/platforms",
       method: "GET",
       success: function success(data) {
+        stage = "platforms";
+        $(".tables").css("display", "none");
         DrawModalInfo(data, "Выберите платформы", "platform");
         $(".modalewin").slideDown();
       },
       cache: false
     });
   });
-  $(".modal__submit").on("click", function (event) {
-    event.stopPropagation();
-    var current_courses = [];
-    $('.flexer input[name="platform"]:checked').each(function (index, platform) {
-      var platform_id = platform.id.slice(8);
-      console.log(platform_id);
-      platforms.push(platform_id);
-      $.ajax({
-        url: "/api/courses/" + platform_id,
-        method: "GET",
-        cache: false,
-        success: function success(data) {
-          current_courses.push(data);
-        }
-      });
-    });
-    console.log(current_courses);
-    DrawModalInfo(current_courses, 'Выберите курсы', 'course');
+  $(".modal__submit").on("click", function (e) {
+    if (stage == "platforms") ApplyPlatforms(e);else if (stage == "courses") ApplyCourses(e);
   });
-
-  function DrawModalInfo(data, title, prefix) {
-    $(".modal__title").text(title);
-    $(".flexer").empty();
-    data.forEach(function (el) {
-      $(".flexer").append($("<div>", {
-        "class": "platforms"
-      }).append($("<input>", {
-        type: "checkbox",
-        id: prefix + el.id,
-        name: prefix
-      })).append($("<label>", {
-        "for": prefix + el.id,
-        text: el.name
-      })));
-    });
-  }
 });
+
+function ApplyPlatforms(event) {
+  event.stopPropagation();
+  var current_courses = [];
+  $('.flexer input[name="platform"]:checked').each(function (index, platform) {
+    var platform_id = platform.id.slice(8);
+    platforms.push(platform_id);
+    $.ajax({
+      url: "/api/platforms/".concat(platform_id, "/courses"),
+      method: "GET",
+      async: false,
+      cache: false,
+      success: function success(data) {
+        current_courses.push.apply(current_courses, _toConsumableArray(data));
+      }
+    });
+  });
+  stage = "courses";
+  DrawModalInfo(current_courses, "Выберите курсы", "course");
+}
+
+function ApplyCourses(event) {
+  var current_blocks = [];
+  $('.flexer input[name="courses"]:checked').each(function (index, course) {
+    var course_id = course.id.slice(7);
+    courses.push(course_id);
+    $ajax({
+      url: "/api/courses/".concat(course_id, "/blocks"),
+      method: "GET",
+      async: false,
+      caches: false,
+      success: function success(data) {
+        current_blocks.push.apply(current_blocks, _toConsumableArray(data));
+      }
+    });
+  });
+  stage = "blocks";
+  $(".tables").css("display", "block");
+}
+
+function DrawModalInfo(data, title, prefix) {
+  $(".modal__title").text(title);
+  $(".flexer").empty();
+  data.forEach(function (el) {
+    $(".flexer").append($("<div>", {
+      "class": "platforms"
+    }).append($("<input>", {
+      type: "checkbox",
+      id: prefix + el.id,
+      name: prefix,
+      "class": ".inmodale label"
+    })).append($("<label>", {
+      "for": prefix + el.id,
+      text: el.name
+    })));
+  });
+}
 
 /***/ }),
 
