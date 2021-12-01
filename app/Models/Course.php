@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $guarded = [];
+
+    public function blocks()
+    {
+        return $this->hasMany(Block::class);
+    }
 }
