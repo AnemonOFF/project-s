@@ -1,8 +1,110 @@
 .mainbutton {
-    background-color: black;
-    color: white;
+    font-family: Helvetica;
+    letter-spacing: 0.4em;
+    font-weight: 30px;
     font-size: 30px;
+    text-align: center;
+    border: 1px solid transparent;
+    color: white;
     cursor: pointer;
+    padding: 1em;
+    background-color: transparent;
+    outline: 1px solid;
+    transition: all 600ms cubic-bezier(0.2, 0, 0, 0.8);
+    margin-left: 100px;
+}
+.mainbutton:hover {
+    color: rgba(71, 126, 232, 0.7);
+    outline-color: rgba(71, 126, 232, 0);
+    outline-offset: 100px;
+}
+
+.loft {
+    box-sizing: border-box;
+    font-family: Arial;
+}
+.flexter {
+    display: flex;
+    padding-top: 18%;
+    justify-content: center;
+}
+body {
+    align-items: center;
+    min-height: 100vh;
+    background: #07252d;
+    justify-content: center;
+}
+h2 {
+    position: relative;
+    font-size: 6em;
+    letter-spacing: 15px;
+    color: #0e3742;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
+    line-height: 0.7em;
+    outline: none;
+    -webkit-animation: animate 5s linear infinite;
+            animation: animate 5s linear infinite;
+}
+
+@-webkit-keyframes animate {
+    0%,
+    18%,
+    20%,
+    50.1%,
+    60%,
+    65.1%,
+    80%,
+    90.1%,
+    92% {
+        color: #0e3742;
+        text-shadow: none;
+    }
+    18.1%,
+    20.1%,
+    30%,
+    50%,
+    60.1%,
+    65%,
+    80.1%,
+    90%,
+    92.1%,
+    100% {
+        color: #fff;
+        text-shadow: 0 0 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4,
+            0 0 80px #03bcf4, 0 0 160px #03bcf4;
+    }
+}
+
+@keyframes animate {
+    0%,
+    18%,
+    20%,
+    50.1%,
+    60%,
+    65.1%,
+    80%,
+    90.1%,
+    92% {
+        color: #0e3742;
+        text-shadow: none;
+    }
+    18.1%,
+    20.1%,
+    30%,
+    50%,
+    60.1%,
+    65%,
+    80.1%,
+    90%,
+    92.1%,
+    100% {
+        color: #fff;
+        text-shadow: 0 0 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4,
+            0 0 80px #03bcf4, 0 0 160px #03bcf4;
+    }
 }
 .modalewin {
     background-color: rgba(0, 0, 0, 0.7);
@@ -16,28 +118,28 @@
 }
 .modal__title {
     margin-top: 20px;
-    color: #000;
+    color: #03bcf4;
     font-size: 40px;
     text-align: center;
     font-weight: bold;
 }
 .modal__submit {
     position: absolute;
-    right: 50px;
+    right: 51px;
     font-size: 30px;
     padding: 5px;
     cursor: pointer;
 }
 
 .inmodale {
-    background-color: #fff;
+    background-color: #07252d;
     width: 100%;
     height: 100%;
     overflow: auto;
     box-shadow: 10px 10px 10px 2px rgba(0, 0, 0, 0.3);
 }
 .inmodale label {
-    color: black;
+    color: #03bcf4;
     border: 1px solid transparent;
     padding: 10px;
     transition: all 0.2s linear;
@@ -57,10 +159,54 @@
 .platforms input:checked ~ label {
     color: #08ffc5;
 }
+.tables {
+    margin: 100px;
+    display: none;
+    color: #03bcf4;
+}
 .flexer {
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
     text-align: center;
+}
+@media (min-device-width: 768px) and (max-device-width: 1024px) {
+    .loft {
+        top: 100px;
+        left: -170px;
+        white-space: nowrap;
+    }
+    h2 {
+        font-size: 3em;
+        white-space: nowrap;
+    }
+    .mainbutton {
+        margin-left: 10px;
+        font-size: 2em;
+        padding: 1em;
+    }
+    .modal__submit {
+        font-size: 1em;
+    }
+}
+@media (min-device-width: 320px) and (max-device-width: 568px) {
+    .loft {
+        top: 100px;
+        left: -170px;
+        white-space: nowrap;
+    }
+    h2 {
+        font-size: 1em;
+        white-space: nowrap;
+    }
+    .mainbutton {
+        margin-left: 180px;
+        font-size: 1em;
+    }
+    .tables {
+        position: absolute;
+        margin-top: 130px;
+        margin-left: -0px;
+    }
 }
 

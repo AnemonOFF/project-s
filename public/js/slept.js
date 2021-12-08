@@ -19,12 +19,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var platforms = [],
-    courses = [],
+var platform = [],
+    course = [],
     blocks = [],
     tasks = [],
     marks = [],
-    stage = "platforms";
+    stage = "platforms",
+    current_page = 0;
 $(function () {
   $(".modalewin").click(function () {
     $(".modalewin").fadeOut();
@@ -53,40 +54,58 @@ $(function () {
 function ApplyPlatforms(event) {
   event.stopPropagation();
   var current_courses = [];
-  $('.flexer input[name="platform"]:checked').each(function (index, platform) {
-    var platform_id = platform.id.slice(8);
-    platforms.push(platform_id);
-    $.ajax({
-      url: "/api/platforms/".concat(platform_id, "/courses"),
-      method: "GET",
-      async: false,
-      cache: false,
-      success: function success(data) {
-        current_courses.push.apply(current_courses, _toConsumableArray(data));
-      }
-    });
+  platform = $('.flexer input[name="platform"]:checked')[0];
+  var platform_id = platform.id.slice(8);
+  $.ajax({
+    url: "/api/platforms/".concat(platform_id, "/courses"),
+    method: "GET",
+    async: false,
+    cache: false,
+    success: function success(data) {
+      current_courses.push.apply(current_courses, _toConsumableArray(data));
+    }
   });
   stage = "courses";
   DrawModalInfo(current_courses, "Выберите курсы", "course");
 }
 
 function ApplyCourses(event) {
-  var current_blocks = [];
-  $('.flexer input[name="courses"]:checked').each(function (index, course) {
-    var course_id = course.id.slice(7);
-    courses.push(course_id);
-    $ajax({
-      url: "/api/courses/".concat(course_id, "/blocks"),
-      method: "GET",
-      async: false,
-      caches: false,
-      success: function success(data) {
-        current_blocks.push.apply(current_blocks, _toConsumableArray(data));
-      }
-    });
+  course = $('.flexer input[name="courses"]:checked')[0];
+  var course_id = course.id.slice(7);
+  stage = "table";
+  var course_info = GetCourseInfo(course_id, 0);
+  DrawTable(course_info["points_max"], course_info["students"]);
+}
+
+function GetCourseInfo(course_id, page) {
+  var result = null;
+  $ajax({
+    url: "/api/courses/".concat(course_id, "/students?page=").concat(page),
+    method: "GET",
+    caches: false,
+    async: false,
+    success: function success(data) {
+      result = data;
+    }
   });
-  stage = "blocks";
-  $(".tables").css("display", "block");
+  return result;
+}
+
+function DrawTable(max_points, students) {
+  var table = $("#CourseStudentsTable tbody");
+  table.empty();
+  students.forEach(function (student) {
+    table.append($("<tr>", {
+      "class": "student",
+      id: "Student".concat(student.id)
+    }).append($("<td>", {
+      text: student.full_name
+    })).append($("<td>", {
+      text: student.points
+    })).append($("<td>", {
+      text: parseInt(student.points) / parseInt(max_points) * 100
+    })));
+  });
 }
 
 function DrawModalInfo(data, title, prefix) {
@@ -96,7 +115,7 @@ function DrawModalInfo(data, title, prefix) {
     $(".flexer").append($("<div>", {
       "class": "platforms"
     }).append($("<input>", {
-      type: "checkbox",
+      type: "radio",
       id: prefix + el.id,
       name: prefix,
       "class": ".inmodale label"
