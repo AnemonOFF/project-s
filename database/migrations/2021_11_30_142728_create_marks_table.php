@@ -20,7 +20,7 @@ class CreateMarksTable extends Migration
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(Task::class);
             $table->float('mark');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

@@ -32,7 +32,7 @@ class MarkController extends Controller
 
         $validator = Validator::make($request->all(),[
             'student_id' => 'required|exists:students,id',
-            'task_id' => 'required|exists:tasks.id',
+            'task_id' => 'required|exists:tasks,id',
             'mark' => 'required|numeric|min:0',
         ]);
 

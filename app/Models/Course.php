@@ -13,4 +13,13 @@ class Course extends Model
     {
         return $this->hasMany(Block::class);
     }
+
+    protected static function boot(){
+        parent::boot();
+        static::deleting(function(Course $courseToDelete){
+            Block::where('course_id', '=', $courseToDelete->id)->get()->each(function(Block $block){
+                $block->delete();
+            });;
+        });
+    }
 }

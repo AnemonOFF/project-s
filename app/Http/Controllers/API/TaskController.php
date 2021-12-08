@@ -32,7 +32,7 @@ class TaskController extends Controller
 
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:100',
-            'block_id' => 'required|exists:courses,id',
+            'block_id' => 'required|exists:blocks,id',
             'points_max' => 'nullable|numeric|min:0',
             'points_pass' => 'nullable|numeric|min:0|less_than_field:points_max',
         ]);

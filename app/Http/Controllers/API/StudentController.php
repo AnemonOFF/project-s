@@ -31,8 +31,8 @@ class StudentController extends Controller
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:100',
-            'surname' => 'required|string|max:100',
+            'full_name' => 'required|string|max:250',
+            'email' => 'required|email|max:250',
         ]);
 
         if($validator->fails()){
@@ -40,8 +40,8 @@ class StudentController extends Controller
         }
 
         $student = Student::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
+            'full_name' => $request->full_name,
+            'email' => $request->email,
          ]);
         
         return response()->json(new StudentResource($student));
@@ -53,16 +53,16 @@ class StudentController extends Controller
             return response()->json("Authentification required", 403);
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:100',
-            'surname' => 'required|string|max:100',
+            'full_name' => 'required|string|max:250',
+            'email' => 'required|email|max:250',
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors());       
         }
 
-        $student->name = $request->name;
-        $student->surname = $request->surname;
+        $student->full_name = $request->full_name;
+        $student->email = $request->email;
         $student->save();
         
         return response()->json(new StudentResource($student));

@@ -37,9 +37,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
 
+    //API route for parse spreedsheet
+    Route::post('/parse', [App\Http\Controllers\API\ParseController::class, 'parse']);
+
     //API route for register new user
     Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
 
-    // API route for logout user
+    //API route for logout user
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });

@@ -13,4 +13,13 @@ class Platform extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    protected static function boot(){
+        parent::boot();
+        static::deleting(function(Platform $platformToDelete){
+            Course::where('platform_id', '=', $platformToDelete->id)->get()->each(function(Course $course){
+                $course->delete();
+            });;
+        });
+    }
 }

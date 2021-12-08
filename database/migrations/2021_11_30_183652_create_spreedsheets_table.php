@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\Course;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStudentsTable extends Migration
+class CreateSpreedsheetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +14,12 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('spreedsheets', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name', 250);
-            $table->string('email', 250);
+            $table->string('name');
+            $table->string('path');
+            $table->foreignIdFor(Course::class);
+            $table->enum('type', ['default', 'ulearn'])->default('default');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('spreedsheets');
     }
 }
