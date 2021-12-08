@@ -18,6 +18,7 @@ class CourseResource extends JsonResource
             'id' => $this->id,
             'platform_id' => $this->platform_id,
             'name' => $this->name,
+            'points_max' => $this->points_max,
         ];
     }
 }

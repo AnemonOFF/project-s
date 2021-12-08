@@ -14,6 +14,11 @@ class Course extends Model
         return $this->hasMany(Block::class);
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'courses_students', 'course_id', 'student_id');
+    }
+
     protected static function boot(){
         parent::boot();
         static::deleting(function(Course $courseToDelete){

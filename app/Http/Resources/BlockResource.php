@@ -19,6 +19,7 @@ class BlockResource extends JsonResource
             'course_id' => $this->course_id,
             'parent_id' => $this->parent_id,
             'name' => $this->name,
+            'points_max' => $this->points_max,
         ];
     }
 }

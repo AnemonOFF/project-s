@@ -19,6 +19,7 @@ class CreateBlocksTable extends Migration
             $table->foreignIdFor(Course::class);
             $table->foreignId('parent_id')->nullable();
             $table->string('name', 100);
+            $table->float('points_max')->nullable();
             $table->timestamps();
         });
     }

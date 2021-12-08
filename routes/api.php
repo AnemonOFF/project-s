@@ -29,6 +29,7 @@ Route::resource('tasks.marks', App\Http\Controllers\API\TaskMarksController::cla
 Route::resource('marks', App\Http\Controllers\API\MarkController::class);
 Route::resource('students', App\Http\Controllers\API\StudentController::class);
 Route::resource('students.marks', App\Http\Controllers\API\StudentMarksController::class);
+Route::resource('courses.students', App\Http\Controllers\API\CourseStudentsController::class);
 
 //Protecting routes
 Route::group(['middleware' => ['auth:sanctum']], function () {

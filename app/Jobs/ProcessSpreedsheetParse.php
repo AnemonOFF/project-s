@@ -101,7 +101,7 @@ class ProcessSpreedsheetParse implements ShouldQueue
                 continue;
             if(count($blocks) > 0)
                 $blocks[count($blocks) - 1]['length'] = $column - $blocks[count($blocks) - 1]['column'];
-            array_push($blocks, ['name' => $cell, 'column' => $column, 'tasks' => []]);
+            array_push($blocks, ['name' => $cell, 'column' => $column, 'tasks' => [], 'max' => 0.0]);
         }
         $blocks[count($blocks) - 1]['length'] = count($data[0]) - $blocks[count($blocks) - 1]['column'];
         //find custom 'teacher' columns
@@ -120,6 +120,7 @@ class ProcessSpreedsheetParse implements ShouldQueue
 
         //parse tasks names
         $currentBlockNumber = 0;
+        $courseMaxPoints = 0.0;
         for($column = $blocks[0]['column']; $column < $blocks[count($blocks) - 1]['column'] + $blocks[count($blocks) - 1]['length']; $column++)
         {
             $cell = $data[$tasksRow][$column];
@@ -127,8 +128,12 @@ class ProcessSpreedsheetParse implements ShouldQueue
                 continue;
             if($column >= $blocks[$currentBlockNumber]['column'] + $blocks[$currentBlockNumber]['length'])
                 $currentBlockNumber++;
-            array_push($blocks[$currentBlockNumber]['tasks'], ['name' => $cell, 'max' => $data[$maximumsRow][$column], 'column' => $column, 'marks' => []]);
+            $max = $data[$maximumsRow][$column];
+            array_push($blocks[$currentBlockNumber]['tasks'], ['name' => $cell, 'max' => $max, 'column' => $column, 'marks' => []]);
+            $blocks[$currentBlockNumber]['max'] += floatval($max);
+            $courseMaxPoints += floatval($max);
         }
+        $course->update(['points_max' => $courseMaxPoints]);
 
         //parse students marks
         $students = [];
@@ -139,6 +144,7 @@ class ProcessSpreedsheetParse implements ShouldQueue
                 'full_name' => $rowData[0],
                 'email' => $rowData[1],
             ]);
+            $student->courses()->attach($course->id);
             array_push($students, $rowData[0]);
             $studentId = $student->id;
             foreach($blocks as &$block)
@@ -159,6 +165,7 @@ class ProcessSpreedsheetParse implements ShouldQueue
             $blockId = Block::create([
                 'course_id' => $courseId,
                 'name' => $block['name'],
+                'points_max' => $block['max'],
             ])->id;
             foreach($block['tasks'] as $task)
             {

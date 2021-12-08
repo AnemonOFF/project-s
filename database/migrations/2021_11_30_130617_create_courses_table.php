@@ -18,6 +18,7 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->foreignIdFor(Platform::class);
             $table->string('name', 100)->unique();
+            $table->float('points_max')->nullable();
             $table->timestamps();
         });
     }
