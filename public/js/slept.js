@@ -59,41 +59,36 @@ function ApplyPlatforms(event) {
   $.ajax({
     url: "/api/platforms/".concat(platform_id, "/courses"),
     method: "GET",
-    async: false,
     cache: false,
     success: function success(data) {
       current_courses.push.apply(current_courses, _toConsumableArray(data));
+      stage = "courses";
+      DrawModalInfo(current_courses, "Выберите курсы", "course");
     }
   });
-  stage = "courses";
-  DrawModalInfo(current_courses, "Выберите курсы", "course");
 }
 
 function ApplyCourses(event) {
-  course = $('.flexer input[name="courses"]:checked')[0];
-  var course_id = course.id.slice(7);
+  course = $('.flexer input[name="course"]:checked')[0];
+  var course_id = course.id.slice(6);
   stage = "table";
-  var course_info = GetCourseInfo(course_id, 0);
-  DrawTable(course_info["points_max"], course_info["students"]);
+  GetCourseInfo(course_id, 0).then(function (data) {
+    return DrawTable(data["points_max"], data["students"]);
+  });
 }
 
 function GetCourseInfo(course_id, page) {
-  var result = null;
-  $ajax({
+  return Promise.resolve($.ajax({
     url: "/api/courses/".concat(course_id, "/students?page=").concat(page),
     method: "GET",
-    caches: false,
-    async: false,
-    success: function success(data) {
-      result = data;
-    }
-  });
-  return result;
+    caches: false
+  }));
 }
 
 function DrawTable(max_points, students) {
   var table = $("#CourseStudentsTable tbody");
   table.empty();
+  $('#CourseStudentsTable').css('display', 'block');
   students.forEach(function (student) {
     table.append($("<tr>", {
       "class": "student",
@@ -103,7 +98,7 @@ function DrawTable(max_points, students) {
     })).append($("<td>", {
       text: student.points
     })).append($("<td>", {
-      text: parseInt(student.points) / parseInt(max_points) * 100
+      text: Math.round(parseInt(student.points) / parseInt(max_points) * 100)
     })));
   });
 }

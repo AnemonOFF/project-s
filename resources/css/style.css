@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 .mainbutton {
     font-family: Helvetica;
     letter-spacing: 0.4em;
@@ -132,7 +136,7 @@ h2 {
     color: #08ffc5;
 }
 .tables {
-    margin: 100px;
+    margin: auto;
     display: none;
     color: #03bcf4;
 }

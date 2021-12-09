@@ -190,7 +190,7 @@ class ProcessSpreedsheetParse implements ShouldQueue
         //Write in file
         Storage::disk('local')->put('marks.json', json_encode($marks));
         $fileName = 'temp_'.time().'.txt';
-        $filePath = $_SERVER['DOCUMENT_ROOT'].'../../../userdata/temp/upload/';
+        $filePath = $_SERVER['DOCUMENT_ROOT'].'../../userdata/temp/upload/';
         $loadDataFile = fopen($filePath.$fileName, 'a');
         foreach($marks as $mark)
         {

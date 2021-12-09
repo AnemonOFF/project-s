@@ -22,7 +22,7 @@ class CourseStudentsController extends Controller
         $page = $request['page'];
         //$courseId = $request['course_id'];
         //$course = Course::find($courseId);
-        $students = $course->students()->skip(intval($page) * 20)->take(20)->get();
+        $students = $course->students()->skip(intval($page) * 50)->take(50)->get();
         $data = [
             'points_max' => $course->points_max,
             'students' => []

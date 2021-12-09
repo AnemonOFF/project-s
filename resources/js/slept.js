@@ -43,41 +43,34 @@ function ApplyPlatforms(event) {
     $.ajax({
         url: `/api/platforms/${platform_id}/courses`,
         method: "GET",
-        async: false,
         cache: false,
         success: function (data) {
             current_courses.push(...data);
+            stage = "courses";
+            DrawModalInfo(current_courses, "Выберите курсы", "course");
         },
     });
-    stage = "courses";
-    DrawModalInfo(current_courses, "Выберите курсы", "course");
 }
 
 function ApplyCourses(event) {
-    course = $('.flexer input[name="courses"]:checked')[0];
-    let course_id = course.id.slice(7);
+    course = $('.flexer input[name="course"]:checked')[0];
+    let course_id = course.id.slice(6);
     stage = "table";
-    let course_info = GetCourseInfo(course_id, 0);
-    DrawTable(course_info["points_max"], course_info["students"]);
+    GetCourseInfo(course_id, 0).then(data => DrawTable(data["points_max"], data["students"]));
 }
 
 function GetCourseInfo(course_id, page) {
-    let result = null;
-    $ajax({
+    return Promise.resolve($.ajax({
         url: `/api/courses/${course_id}/students?page=${page}`,
         method: "GET",
         caches: false,
-        async: false,
-        success: function (data) {
-            result = data;
-        },
-    });
-    return result;
+    }));
 }
 
 function DrawTable(max_points, students) {
     const table = $("#CourseStudentsTable tbody");
     table.empty();
+    $('#CourseStudentsTable').css('display', 'block');
     students.forEach((student) => {
         table.append(
             $("<tr>", { class: "student", id: `Student${student.id}` })
@@ -85,9 +78,7 @@ function DrawTable(max_points, students) {
                 .append($("<td>", { text: student.points }))
                 .append(
                     $("<td>", {
-                        text:
-                            (parseInt(student.points) / parseInt(max_points)) *
-                            100,
+                        text: Math.round((parseInt(student.points) / parseInt(max_points)) * 100),
                     })
                 )
         );
