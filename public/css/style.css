@@ -17,6 +17,7 @@
     transition: all 600ms cubic-bezier(0.2, 0, 0, 0.8);
     margin-left: 100px;
 }
+
 .mainbutton:hover {
     color: rgba(71, 126, 232, 0.7);
     outline-color: rgba(71, 126, 232, 0);
@@ -27,17 +28,20 @@
     box-sizing: border-box;
     font-family: Arial;
 }
-.flexter {
+
+header {
     display: flex;
     padding-top: 18%;
     justify-content: center;
 }
+
 body {
     align-items: center;
     min-height: 100vh;
     background: #07252d;
     justify-content: center;
 }
+
 h2 {
     position: relative;
     font-size: 6em;
@@ -110,7 +114,8 @@ h2 {
             0 0 80px #03bcf4, 0 0 160px #03bcf4;
     }
 }
-.modalewin {
+
+.modal {
     background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
     left: 0;
@@ -120,6 +125,7 @@ h2 {
     padding: 50px;
     z-index: 100;
 }
+
 .modal__title {
     margin-top: 20px;
     color: #03bcf4;
@@ -127,6 +133,7 @@ h2 {
     text-align: center;
     font-weight: bold;
 }
+
 .modal__submit {
     position: absolute;
     right: 51px;
@@ -135,20 +142,22 @@ h2 {
     cursor: pointer;
 }
 
-.inmodale {
+.modal__content {
     background-color: #07252d;
     width: 100%;
     height: 100%;
     overflow: auto;
     box-shadow: 10px 10px 10px 2px rgba(0, 0, 0, 0.3);
 }
-.inmodale label {
+
+.modal__content label {
     color: #03bcf4;
     border: 1px solid transparent;
     padding: 10px;
     transition: all 0.2s linear;
     cursor: pointer;
 }
+
 .platforms {
     width: 33.3%;
     min-width: 200px;
@@ -157,23 +166,28 @@ h2 {
     font-style: oblique 0.2deg;
     font-weight: default;
 }
+
 .platforms input {
     display: none;
 }
+
 .platforms input:checked ~ label {
     color: #08ffc5;
 }
+
 .tables {
     margin: auto;
     display: none;
     color: #03bcf4;
 }
-.flexer {
+
+.modal__items {
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
     text-align: center;
 }
+
 @media (min-device-width: 768px) and (max-device-width: 1024px) {
     .loft {
         top: 100px;
@@ -193,6 +207,7 @@ h2 {
         font-size: 1em;
     }
 }
+
 @media (min-device-width: 320px) and (max-device-width: 568px) {
     .loft {
         top: 100px;

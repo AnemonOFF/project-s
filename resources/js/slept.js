@@ -7,11 +7,11 @@ let platform = [],
     current_page = 0;
 
 $(function () {
-    $(".modalewin").click(function () {
-        $(".modalewin").fadeOut();
+    $(".modal").click(function () {
+        $(".modal").fadeOut();
     });
 
-    $(".inmodale").click(function (event) {
+    $(".modal__content").click(function (event) {
         event.stopPropagation();
     });
 
@@ -23,7 +23,7 @@ $(function () {
                 stage = "platforms";
                 $(".tables").css("display", "none");
                 DrawModalInfo(data, "Выберите платформы", "platform");
-                $(".modalewin").slideDown();
+                $(".modal").slideDown();
             },
             cache: false,
         });
@@ -38,7 +38,7 @@ $(function () {
 function ApplyPlatforms(event) {
     event.stopPropagation();
     let current_courses = [];
-    platform = $('.flexer input[name="platform"]:checked')[0];
+    platform = $('.modal__items input[name="platform"]:checked')[0];
     let platform_id = platform.id.slice(8);
     $.ajax({
         url: `/api/platforms/${platform_id}/courses`,
@@ -53,7 +53,7 @@ function ApplyPlatforms(event) {
 }
 
 function ApplyCourses(event) {
-    course = $('.flexer input[name="course"]:checked')[0];
+    course = $('.modal__items input[name="course"]:checked')[0];
     let course_id = course.id.slice(6);
     stage = "table";
     GetCourseInfo(course_id, 0).then(data => DrawTable(data["points_max"], data["students"]));
@@ -87,16 +87,16 @@ function DrawTable(max_points, students) {
 
 function DrawModalInfo(data, title, prefix) {
     $(".modal__title").text(title);
-    $(".flexer").empty();
+    $(".modal__items").empty();
     data.forEach((el) => {
-        $(".flexer").append(
+        $(".modal__items").append(
             $("<div>", { class: "platforms" })
                 .append(
                     $("<input>", {
                         type: "radio",
                         id: prefix + el.id,
                         name: prefix,
-                        class: ".inmodale label",
+                        class: ".modal__content label",
                     })
                 )
                 .append(
