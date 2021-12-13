@@ -88,7 +88,7 @@ function GetCourseInfo(course_id, page) {
 function DrawTable(max_points, students) {
   var table = $("#CourseStudentsTable tbody");
   table.empty();
-  $('#CourseStudentsTable').css('display', 'block');
+  $("#CourseStudentsTable").css("display", "table");
   students.forEach(function (student) {
     table.append($("<tr>", {
       "class": "student",

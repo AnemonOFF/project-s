@@ -56,21 +56,25 @@ function ApplyCourses(event) {
     course = $('.modal__items input[name="course"]:checked')[0];
     let course_id = course.id.slice(6);
     stage = "table";
-    GetCourseInfo(course_id, 0).then(data => DrawTable(data["points_max"], data["students"]));
+    GetCourseInfo(course_id, 0).then((data) =>
+        DrawTable(data["points_max"], data["students"])
+    );
 }
 
 function GetCourseInfo(course_id, page) {
-    return Promise.resolve($.ajax({
-        url: `/api/courses/${course_id}/students?page=${page}`,
-        method: "GET",
-        caches: false,
-    }));
+    return Promise.resolve(
+        $.ajax({
+            url: `/api/courses/${course_id}/students?page=${page}`,
+            method: "GET",
+            caches: false,
+        })
+    );
 }
 
 function DrawTable(max_points, students) {
     const table = $("#CourseStudentsTable tbody");
     table.empty();
-    $('#CourseStudentsTable').css('display', 'block');
+    $("#CourseStudentsTable").css("display", "table");
     students.forEach((student) => {
         table.append(
             $("<tr>", { class: "student", id: `Student${student.id}` })
@@ -78,7 +82,10 @@ function DrawTable(max_points, students) {
                 .append($("<td>", { text: student.points }))
                 .append(
                     $("<td>", {
-                        text: Math.round((parseInt(student.points) / parseInt(max_points)) * 100),
+                        text: Math.round(
+                            (parseInt(student.points) / parseInt(max_points)) *
+                                100
+                        ),
                     })
                 )
         );

@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <button class="mainbutton" id="ChoosePlatform">platforms</button>
+        <button class="mainbutton main_flex" id="ChoosePlatform">platforms</button>
         <h2 class="loft">Project-S</h2>
     </header>
     <div class="modal" style="display: none;">
@@ -29,6 +29,10 @@
         <tbody>
         </tbody>
     </table>
+    <nav class="norm_class" >
+      <a class="mainbutton fir" href="#" tabindex="-1" aria-disabled="true" style="color:#03bcf4;" >Previous</a>
+      <a class="mainbutton sec" href="#" tabindex="-1" aria-disabled="true" style="color:#03bcf4;">next</a>
+    </nav>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/slept.js') }}"></script>
 </body>
