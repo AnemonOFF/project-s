@@ -30,8 +30,8 @@
         </tbody>
     </table>
     <nav class="norm_class" >
-      <a class="mainbutton fir" href="#" tabindex="-1" aria-disabled="true" style="color:#03bcf4;" >Previous</a>
-      <a class="mainbutton sec" href="#" tabindex="-1" aria-disabled="true" style="color:#03bcf4;">next</a>
+      <a class="mainbutton fir" href="#" tabindex="-1" aria-disabled="true" style="color:#000" >Previous</a>
+      <a class="mainbutton sec" href="#" tabindex="-1" aria-disabled="true" style="color:#000;">next</a>
     </nav>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/slept.js') }}"></script>
