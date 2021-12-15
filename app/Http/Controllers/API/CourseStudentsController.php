@@ -14,18 +14,17 @@ class CourseStudentsController extends Controller
         $course = Course::find($courseId);
         $validator = Validator::make($request->all(),[
             'page' => 'required|numeric',
-            //'course_id' => 'required|exists:courses,id',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors());
         }
         $page = $request['page'];
-        //$courseId = $request['course_id'];
-        //$course = Course::find($courseId);
-        $students = $course->students()->skip(intval($page) * 50)->take(50)->get();
+        $studentsTotal = $course->students();
+        $students = $studentsTotal->skip(intval($page) * 50)->take(50)->get();
         $data = [
             'points_max' => $course->points_max,
-            'students' => []
+            'students_count' => $studentsTotal->count(),
+            'students' => [],
         ];
         foreach($students as $student)
         {
