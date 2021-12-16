@@ -59,8 +59,8 @@ $(function () {
     if (stage == "platforms") ApplyPlatforms(e);else if (stage == "courses") ApplyCourses(e);
   });
   $(".norm_class").on("click", function (e) {
-    if (e.target.classList.contains('fir')) current_page--;
-    if (e.target.classList.contains('sec')) current_page++;
+    if (e.target.classList.contains("fir")) current_page--;
+    if (e.target.classList.contains("sec")) current_page++;
     var loader = GetLoader();
     CheckPaginationButtons();
     $("#CourseStudentsTable tbody").append(loader);
@@ -70,15 +70,16 @@ $(function () {
   });
   $("#CourseStudentsTable").on("click", "tr", function (e) {
     var course_id = course.id.slice(6);
-    var student_id = e.target.closest('tr').id.slice(7);
+    var student_id = e.target.closest("tr").id.slice(7);
     ShowCourseBlocks(course_id, student_id);
   });
   $(".button-back").on("click", function (e) {
     $(".modal-course").css("display", "none");
+    $("body").css("overflow", "auto");
   });
   $(".modal-course__blocks").on("click", ".modal-course__block", function (e) {
     var block_id = this.id.slice(5);
-    if ($("#Block" + block_id).next().is('div.modal-course__block__info')) $('.modal-course__block__info').remove();else {
+    if ($("#Block" + block_id).next().is("div.modal-course__block__info")) $(".modal-course__block__info").remove();else {
       var block = blocks.find(function (el) {
         return el.id == block_id;
       });
@@ -88,8 +89,8 @@ $(function () {
 });
 
 function CheckPaginationButtons() {
-  if (current_page > 0) $('.mainbutton.fir').css('visibility', 'visible');else $('.mainbutton.fir').css('visibility', 'hidden');
-  if (current_page + 1 < max_page) $('.mainbutton.sec').css('visibility', 'visible');else $('.mainbutton.sec').css('visibility', 'hidden');
+  if (current_page > 0) $(".mainbutton.fir").css("visibility", "visible");else $(".mainbutton.fir").css("visibility", "hidden");
+  if (current_page + 1 < max_page) $(".mainbutton.sec").css("visibility", "visible");else $(".mainbutton.sec").css("visibility", "hidden");
 }
 
 function GetLoader() {
@@ -102,36 +103,36 @@ function GetLoader() {
 
 function ShowBlockInfo(block_id, block_info) {
   $(".modal-course__block__info").remove();
-  var block = $('#Block' + block_id);
-  var tasks_rows = $('<tbody>');
-  block_info['tasks'].forEach(function (task) {
-    tasks_rows.append($('<tr>').append($('<td>', {
-      text: task['name']
-    })).append($('<td>', {
-      text: task['points_student']
-    })).append($('<td>', {
-      text: task['points_max']
-    })).append($('<td>', {
-      text: Math.round(task['points_student'] / task['points_max'] * 100)
+  var block = $("#Block" + block_id);
+  var tasks_rows = $("<tbody>");
+  block_info["tasks"].forEach(function (task) {
+    tasks_rows.append($("<tr>").append($("<td>", {
+      text: task["name"]
+    })).append($("<td>", {
+      text: task["points_student"]
+    })).append($("<td>", {
+      text: task["points_max"]
+    })).append($("<td>", {
+      text: Math.round(task["points_student"] / task["points_max"] * 100)
     })));
   });
-  block.after($('<div>', {
-    "class": 'modal-course__block__info'
-  }).append($('<table>').append($('<thead>').append($('<tr>').append($('<th>', {
-    text: 'Задание'
-  })).append($('<th>', {
-    text: 'Баллы'
-  })).append($('<th>', {
-    text: 'Максимум'
-  })).append($('<th>', {
-    text: 'Проценты'
+  block.after($("<div>", {
+    "class": "modal-course__block__info"
+  }).append($("<table>").append($("<thead>").append($("<tr>").append($("<th>", {
+    text: "Задание"
+  })).append($("<th>", {
+    text: "Баллы"
+  })).append($("<th>", {
+    text: "Максимум"
+  })).append($("<th>", {
+    text: "Проценты"
   })))).append(tasks_rows)));
 }
 
 function GetCourseBlocks(course_id) {
   var student_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   return Promise.resolve($.ajax({
-    url: "/api/courses/".concat(course_id, "/blocks").concat(!!student_id ? '?student_id=' + student_id : ''),
+    url: "/api/courses/".concat(course_id, "/blocks").concat(!!student_id ? "?student_id=" + student_id : ""),
     method: "GET"
   }));
 }
@@ -139,7 +140,7 @@ function GetCourseBlocks(course_id) {
 function GetBlockTasks(block_id) {
   var student_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   return Promise.resolve($.ajax({
-    url: "/api/blocks/".concat(block_id, "/tasks").concat(!!student_id ? '?student_id=' + student_id : ''),
+    url: "/api/blocks/".concat(block_id, "/tasks").concat(!!student_id ? "?student_id=" + student_id : ""),
     method: "GET"
   }));
 }
@@ -151,13 +152,13 @@ function ShowCourseBlocks(course_id, student_id) {
   var blocks_section = $(".modal-course .modal-course__blocks");
   blocks_section.empty();
   blocks_section.append(loader);
-  $(".modal-course__title h1").text("".concat(course.getAttribute('data-name')));
+  $(".modal-course__title h1").text("".concat(course.getAttribute("data-name")));
   var student;
   $.ajax({
     url: "/api/students/".concat(student_id),
     method: "GET",
     success: function success(data) {
-      $(".modal-course__title h1").text("".concat(data.full_name, " - ").concat(course.getAttribute('data-name')));
+      $(".modal-course__title h1").text("".concat(data.full_name, " - ").concat(course.getAttribute("data-name")));
       student = data;
     }
   });
@@ -179,18 +180,18 @@ function ShowCourseBlocks(course_id, student_id) {
                         case 0:
                           //block['tasks'] = await GetBlockTasks(block['id'], student_id);
                           points_student = 0;
-                          block['tasks'].forEach(function (task) {
-                            points_student += task['points_student'];
+                          block["tasks"].forEach(function (task) {
+                            points_student += task["points_student"];
                           });
-                          blocks_section.append($('<button>', {
-                            "class": 'modal-course__block',
-                            id: 'Block' + block['id']
-                          }).append($('<div>', {
-                            "class": 'modal-course__progress',
-                            style: "right: ".concat(100 - points_student / block['points_max'] * 100, "%;")
-                          })).append($('<div>', {
-                            "class": 'modal-course__block__content',
-                            text: block['name']
+                          blocks_section.append($("<button>", {
+                            "class": "modal-course__block",
+                            id: "Block" + block["id"]
+                          }).append($("<div>", {
+                            "class": "modal-course__progress",
+                            style: "right: ".concat(100 - points_student / block["points_max"] * 100, "%;")
+                          })).append($("<div>", {
+                            "class": "modal-course__block__content",
+                            text: block["name"]
                           })));
 
                         case 3:
@@ -252,16 +253,16 @@ function ApplyCourses(event) {
   var loader = GetLoader();
   $(".modal__items").append(loader);
   GetCourseInfo(course_id, 0).then(function (data) {
-    max_page = Math.ceil(data['students_count'] / 50);
+    max_page = Math.ceil(data["students_count"] / 50);
     CheckPaginationButtons();
     DrawTable(data["points_max"], data["students"]);
-    $('.norm_class').css("display", "flex");
+    $(".norm_class").css("display", "flex");
     loader.remove();
     $(".modal").fadeOut();
     $("body").css("overflow", "auto");
     setTimeout($("#CourseStudentsTableName")[0].scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
+      behavior: "smooth",
+      block: "start"
     }), 1000);
   });
 }
@@ -290,10 +291,10 @@ function DrawTable(max_points, students) {
   });
   $("#CourseStudentsTable").css("display", "table");
   if ($("#CourseStudentsTableName").length == 0) $("#CourseStudentsTable").before($("<h1>", {
-    text: course.getAttribute('data-name'),
-    id: 'CourseStudentsTableName',
-    "class": 'table__name'
-  }));else $("#CourseStudentsTableName").text(course.getAttribute('data-name'));
+    text: course.getAttribute("data-name"),
+    id: "CourseStudentsTableName",
+    "class": "table__name"
+  }));else $("#CourseStudentsTableName").text(course.getAttribute("data-name"));
 }
 
 function DrawModalInfo(data_promise, title, prefix) {
@@ -310,7 +311,7 @@ function DrawModalInfo(data_promise, title, prefix) {
         id: prefix + el.id,
         name: prefix,
         "class": ".modal__content label",
-        'data-name': el.name
+        "data-name": el.name
       })).append($("<label>", {
         "for": prefix + el.id,
         text: el.name

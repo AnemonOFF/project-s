@@ -68,11 +68,11 @@
     border-top: 1px solid rgba(0, 0, 0, 0.185);
 }
 
-.tables tbody{
+.tables tbody {
     position: relative;
 }
 
-.table__name{
+.table__name {
     text-align: center;
 }
 
@@ -166,8 +166,8 @@ body {
     92.1%,
     100% {
         color: #fff;
-        text-shadow: 0 0 10px #03bcf4, 0 0 20px #03bcf4, 0 0 40px #03bcf4,
-            0 0 80px #03bcf4, 0 0 160px #03bcf4;
+        text-shadow: 0 0 10px #6c7ae0, 0 0 20px #6c7ae0, 0 0 40px #6c7ae0,
+            0 0 80px #6c7ae0, 0 0 160px #6c7ae0;
     }
 }
 
@@ -268,48 +268,48 @@ body {
     overflow: auto;
 }
 
-.modal-course__title{
+.modal-course__title {
     display: flex;
     text-align: center;
     padding: 20px;
 }
 
-.modal-course__title h1{
+.modal-course__title h1 {
     margin: auto;
 }
 
-.modal-course__title{
+.modal-course__title {
     padding: 20px;
 }
 
-.modal-course__blocks{
+.modal-course__blocks {
     position: relative;
     min-height: calc(100% - 77px);
     padding: 20px;
 }
 
-.modal-course__block{
+.modal-course__block {
     margin-top: 20px;
     width: 100%;
     height: 50px;
     position: relative;
     display: flex;
-    border: 2px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.425);
 }
 
-.modal-course__block__content{
+.modal-course__block__content {
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-.modal-course__progress{
+.modal-course__progress {
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
     right: 100%;
-    background-color: green;
+    background-color: #6c7ae0;
 }
 
 @media (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -352,18 +352,18 @@ body {
     }
 }
 
-.loader__container{
+.loader__container {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(15px);
+    background: rgba(201, 201, 201, 0.39);
+    backdrop-filter: blur(5px);
 }
 
 $size: 20px;
-$color: #03bcf4;
+$color: #6c7ae0;
 $duration: 0.8s;
 $gap: 10px;
 $align: middle;
@@ -374,43 +374,44 @@ $unique-name: unique-id();
     border-radius: 50%;
     box-shadow: 0 $size * 2 0 $color;
     position: relative;
-    animation: #{'loader11-'}#{$unique-name} $duration ease-in-out alternate infinite;
+    animation: #{"loader11-"}#{$unique-name} $duration ease-in-out alternate infinite;
     animation-delay: calc($duration / 5 * 2);
     &::after,
     &::before {
-      content: '';
-      position: absolute;
-      width: $size;
-      height: $size;
-      border-radius: 50%;
-      box-shadow: 0 $size * 2 0 $color;
-      animation: #{'loader11-'}#{$unique-name} $duration ease-in-out alternate infinite;
-    }   
+        content: "";
+        position: absolute;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        box-shadow: 0 $size * 2 0 $color;
+        animation: #{"loader11-"}#{$unique-name} $duration ease-in-out alternate
+            infinite;
+    }
     &::before {
-      left: -($size + $gap);
-      animation-delay: calc($duration / 5 * 3);  
-    }   
+        left: -($size + $gap);
+        animation-delay: calc($duration / 5 * 3);
+    }
     &::after {
-      right: -($size + $gap);
-      animation-delay: calc($duration / 5);
-    }   
+        right: -($size + $gap);
+        animation-delay: calc($duration / 5);
+    }
     @if ($align == center) {
-      margin-left: auto;
-      margin-right: auto;
+        margin-left: auto;
+        margin-right: auto;
     }
     @if ($align == middle) {
-      top: 50%;
-      margin: calc(0px - ($size * 2 + $size / 2)) auto 0;
+        top: 50%;
+        margin: calc(0px - ($size * 2 + $size / 2)) auto 0;
     } @else {
-      top: -$size * 2;
+        top: -$size * 2;
     }
     @keyframes #{'loader11-'}#{$unique-name} {
-      0% {
-        box-shadow: 0 $size * 2 0 $color;
-      } 
-      100% {
-        box-shadow: 0 $size 0 $color;
-      }
+        0% {
+            box-shadow: 0 $size * 2 0 $color;
+        }
+        100% {
+            box-shadow: 0 $size 0 $color;
+        }
     }
 }
 
@@ -499,5 +500,3 @@ $check-color: $brand-success;
     opacity: 1;
   }
 }*/
-
-

@@ -39,7 +39,7 @@
 
     <div class="modal-course" style="display: none;">
         <div class="modal-course__title">
-            <button class="button-back">Back</button>
+            <button class="mainbutton button-back"><img src="img/back.png" height="30px" width="30px"></button>
             <h1>Course blocks</h1>
         </div>
         <div class="modal-course__blocks">
